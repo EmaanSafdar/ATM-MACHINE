@@ -1,78 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ES6 Condition Checking With if else</title>
 </head>
+
+
 <body>
+
     <form onsubmit="checkPin(); return false">
         <h1>ATM MACHINE</h1>
-        
+
         Enter Your Pin Code:
         <input type="number" id="userInputPin" required>
         <button>Confirm</button>
-
     </form>
 
     <h4 id="errorMessage"></h4>
-    <div id="homeScreen">
+    <div id="homeScreen"></div>
+    <h4 id="withDrawMessage"></h4>
 
-    </div>
+    <ul style="display: none">
+        <li id="item1"></li>
+        <li id="item2"></li>
+        <li id="item3"></li>
+    </ul>
 
-    <h3 id="withdraw1"></h3>
     <script>
-
-        let moneyBox = 22000;  
+        let moneyBox = 22000;
         let cardDailyLimit = 20000;
         let accountBalance = 50000;
-
 
         function checkPin() {
             console.log("I am checking pin");
 
             let userInputPin = document.querySelector("#userInputPin").value;
 
-            if (userInputPin.length < 4) {
-                document.querySelector("#errorMessage").innerHTML = `you must enter 4 digit pin number`;
-                return;
-            }
             if (userInputPin.length > 4) {
-                document.querySelector("#errorMessage").innerHTML = `you must enter 4 digit pin number`;
+                document.querySelector("#errorMessage").innerHTML =
+                    "You Must Enter 4 Digit Pin Number";
                 return;
             }
 
-            if (userInputPin === "5112") {
-                document.querySelector("#errorMessage").innerHTML = `Correct pin number ✅`;
-
-                document.getElementById("#homeScreen").innerHTML = `
-                <form onsubmit="withdraw(); return false">
-                    Enter your amount to withdraw:
-                    <input type="number" id="userInputAmount" required>
-                    <button>WithDraw</button>
-                </form>
-                `
-
-                return;
-            }
-            if (userInputPin !== "5112") {
-                document.querySelector("#errorMessage").innerHTML = `Incorrect pin number ❌`;
+            if (userInputPin.length < 4) {
+                document.querySelector("#errorMessage").innerHTML =
+                    "You Must Enter 4 Digit Pin Number";
                 return;
             }
 
+            if (userInputPin === "1234") {
+                document.querySelector("#errorMessage").innerHTML =
+                    "Correct Pin Number ✅";
+                document.querySelector("#homeScreen").innerHTML = `<hr>
+                        <form onsubmit="withDraw(); return false">
+                             <h3>WITHDRAW</h3>
+                             Enter your Amount to withdraw:
+                             <input type="number" id="userInputAmount" required />
+                             <button>withdraw</button>  
+                        </form>`;
+                return;
+            }
+
+            if (userInputPin !== "1234") {
+                document.querySelector("#errorMessage").innerHTML =
+                    "InCorrect Pin Number ❌ ";
+                return;
+            }
         }
 
-        function withdraw() {
+        function withDraw() {
             let amount = document.querySelector("#userInputAmount").value;
-            if (amount > moneyBox) {
-                console.log("this machine dont have enough money, please try smaller amount");
 
-            }
+            document.querySelector("#withDrawMessage").innerHTML =
+                "Successfully Withdraw your Amount ✅";
+
+            let Item = (document.querySelector("ul").style.display = "block");
+
+            let moneyBox1 = moneyBox - Number(amount);
+
            
-        }
+            if (moneyBox > amount) {
+                let item1 = (document.querySelector("#item1").innerHTML =
+                    "Remaining  Amount : " + (moneyBox - Number(amount)));
+            } else {
+                let item1 = (document.querySelector("#item1").innerHTML =
+                    "Money Box Limit is over");
+            }
 
- </script>
-    
+            if (DailyLimit > amount) {
+                let item2 = (document.querySelector("#item2").innerHTML =
+                    "Remaining  Daily Limit is: " + (DailyLimit - Number(amount)));
+            } else {
+                let item2 = (document.querySelector("#item2").innerHTML =
+                    "Card Daily Limit is over");
+            }
+
+            // account balance
+            if (accountBalance > amount) {
+                let item3 = (document.querySelector("#item3").innerHTML =
+                    "Remaining Account Balance is: " + (accountBalance - Number(amount)));
+            } else {
+                let item3 = (document.querySelector("#item3").innerHTML =
+                    "Account Balance limit is over ");
+            }
+        }
+    </script>
 </body>
+
 </html>
