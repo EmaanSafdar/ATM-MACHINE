@@ -5,8 +5,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ES6 Condition Checking With if else</title>
+    <title>MONEY BOX</title>
 </head>
+
 
 
 <body>
@@ -17,21 +18,25 @@
         Enter Your Pin Code:
         <input type="number" id="userInputPin" required>
         <button>Confirm</button>
+
     </form>
+    <br>
 
     <h4 id="errorMessage"></h4>
     <div id="homeScreen"></div>
-    <h4 id="withDrawMessage"></h4>
+<br>
+    <div id="enoughMoney"></div>
 
     <ul style="display: none">
-        <li id="item1"></li>
-        <li id="item2"></li>
-        <li id="item3"></li>
+
+        <li id="moneyBox"></li>
+        <li id="Dailylimit"></li>
+        <li id="accountBalance"></li>
+
     </ul>
 
-    <script>
-        let moneyBox = 22000;
-        let DailyLimit = 20000;
+    <script>  
+        let Dailylimit = 20000;
         let accountBalance = 50000;
 
         function checkPin() {
@@ -59,7 +64,7 @@
                              <h3>WITHDRAW</h3>
                              Enter your Amount to withdraw:
                              <input type="number" id="userInputAmount" required />
-                             <button>withdraw</button>  
+                             <button>With Draw</button>  
                         </form>`;
                 return;
             }
@@ -72,41 +77,57 @@
         }
 
         function withDraw() {
-            let amount = document.querySelector("#userInputAmount").value;
+            console.log("Withdraw  running...");
+            let userInputAmount = +document.querySelector("#userInputAmount").value;
 
-            document.querySelector("#withDrawMessage").innerHTML =
-                "Successfully Withdraw your Amount ✅";
+
 
             let Item = (document.querySelector("ul").style.display = "block");
 
-            let moneyBox1 = moneyBox - Number(amount);
 
-           
-            if (moneyBox > amount) {
-                let item1 = (document.querySelector("#item1").innerHTML =
-                    "Remaining  Amount : " + (moneyBox - Number(amount)));
-            } else {
-                let item1 = (document.querySelector("#item1").innerHTML =
-                    "Money Box Limit is over");
+            if (userInputAmount > moneyBox) {
+                document.querySelector("#enoughMoney").innerHTML = `This machine don't have enough money, please try smaller amount`
+                return;
             }
 
-            if (DailyLimit > amount) {
-                let item2 = (document.querySelector("#item2").innerHTML =
-                    "Remaining  Daily Limit is: " + (DailyLimit - Number(amount)));
-            } else {
-                let item2 = (document.querySelector("#item2").innerHTML =
-                    "Card Daily Limit is over");
+
+            if (userInputAmount > Dailylimit) {
+                document.querySelector("#enoughMoney").innerHTML = `Daily card limit is Rs.20000, please enter under Daily card limit amount.`
+                return;
             }
 
-            // account balance
-            if (accountBalance > amount) {
-                let item3 = (document.querySelector("#item3").innerHTML =
-                    "Remaining Account Balance is: " + (accountBalance - Number(amount)));
-            } else {
-                let item3 = (document.querySelector("#item3").innerHTML =
-                    "Account Balance limit is over ");
+            if (userInputAmount > accountBalance) {
+                document.querySelector("#enoughMoney").innerHTML = `Your account balance ${accountBalance} is less than your withdrawal amount..`
+                return;
+            }
+
+            if (userInputAmount < "500") {
+                document.querySelector("#enoughMoney").innerHTML = `Please enter more than 500Rs`
+                return;
+            }
+
+            if (userInputAmount % 500) {
+                document.querySelector("#enoughMoney").innerHTML = `Please Enter 500 multiply means 500, 1000, 1500, 2000 etc`
+                return;
+
+            }
+            else {
+                document.querySelector("#enoughMoney").innerHTML = `Withdraw has been Done Successfully`
+
+                moneyBox = moneyBox - userInputAmount;
+                Dailylimit = Dailylimit - userInputAmount;
+                accountBalance = accountBalance - userInputAmount;
+
+                console.log(moneyBox, Dailylimit, accountBalance);
+
+                document.getElementById("moneyBox").innerHTML = "MoneyBox; :" + moneyBox;
+                document.getElementById("Dailylimit").innerHTML = "Dailylimit :" + Dailylimit;
+                document.getElementById("accountBalance").innerHTML = "AccountBalance :" + accountBalance;
+                return;
             }
         }
+
+
     </script>
 </body>
 
